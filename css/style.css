@@ -5,6 +5,12 @@
 .itemFrame {
   border: rgba(211, 211, 211, 0.158) 1px solid;
 }
+.itemFrame__img {
+  margin-bottom: 3rem;
+  object-fit: cover;
+  padding: 0px;
+}
+
 #helpText {
   font-style: italic;
 }

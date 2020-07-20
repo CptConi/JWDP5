@@ -5,7 +5,9 @@
 .itemFrame {
   border: rgba(211, 211, 211, 0.158) 1px solid;
   &__img {
-    
+    margin-bottom: 3rem;
+    object-fit: cover;
+    padding: 0px; // nullify Bootstrap standard padding
   }
 }
 
