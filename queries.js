@@ -5,30 +5,29 @@ let result;
 let request = new XMLHttpRequest();
 
 class Teddy {
-  constructor (pId, pName, pDescription, pPrice, pImageUrl){
+  constructor(pId, pName, pDescription, pPrice, pImageUrl) {
     this.id = pId;
-    this.name= pName;
+    this.name = pName;
     this.description = pDescription;
     this.price = pPrice;
     this.imageUrl = pImageUrl;
     this.color = null;
   }
 
-  setColor(pColor){
+  setColor(pColor) {
     this.color = pColor;
   }
-  
 }
 
-// 
-request.addEventListener('load', function () {
-    if (request.status <= 200 && request.status <300) {
-      //Inscrire ici les path pour accéder aux infos de la réponse server, avec un JSON.parce(request.responseText.[...])
-      result = JSON.parse(request.responseText);
-      // Affichage et formatage des différents éléments récupérés dans result
-      formatReqResult(result);
+//
+request.addEventListener("load", function () {
+  if (request.status <= 200 && request.status < 300) {
+    //Inscrire ici les path pour accéder aux infos de la réponse server, avec un JSON.parce(request.responseText.[...])
+    result = JSON.parse(request.responseText);
+    // Affichage et formatage des différents éléments récupérés dans result
+    formatReqResult(result);
   }
-})
+});
 
 request.open("GET", teddiesURL, true);
 request.send();
@@ -71,16 +70,21 @@ function formatReqResult(pPesult) {
     title.setAttribute("class", "card-title text-center");
     description.setAttribute("class", "card-text m-1");
     price.setAttribute("class", "card-text text-right mr-3 my-2 h4");
-    commandBtn.id = 'commandeBtn';
+    commandBtn.id = "commandeBtn";
     commandBtn.setAttribute(
       "class",
       "btn btn-primary " + /*stretched-link*/ " w-50 mx-auto my-3"
     );
 
-    commandBtn.addEventListener('click', function(){
-      sessionStorage.setItem('teddyId', teddy.id);
+    commandBtn.addEventListener("click", function () {
+      sessionStorage.setItem("id", teddy.id);
+      sessionStorage.setItem("name", teddy.name);
+      sessionStorage.setItem("price", teddy.price);
+      sessionStorage.setItem("description", teddy.description);
+      sessionStorage.setItem("imageUrl", teddy.imageUrl);
+
       window.location = "item-details.html";
-    })
+    });
 
     title.textContent = teddy.name;
     description.textContent = teddy.description;
