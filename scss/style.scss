@@ -1,0 +1,20 @@
+.corner-border {
+  border-radius: 10px;
+}
+
+.itemFrame {
+  border: rgba(211, 211, 211, 0.158) 1px solid;
+  &__img {
+    
+  }
+}
+
+#helpText {
+  font-style: italic;
+}
+
+.emptyFrame{
+    background-color:#F8F8F8;
+    color:#F8F8F8;
+    border-radius: 8px;
+}
