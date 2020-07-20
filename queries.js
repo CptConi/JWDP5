@@ -5,18 +5,15 @@ let result;
 let request = new XMLHttpRequest();
 
 class Teddy {
-  constructor(pId, pName, pDescription, pPrice, pImageUrl) {
+  constructor(pId, pName, pDescription, pPrice, pImageUrl, pColor) {
     this.id = pId;
     this.name = pName;
     this.description = pDescription;
     this.price = pPrice;
     this.imageUrl = pImageUrl;
-    this.color = null;
+    this.tColors = pColor;
   }
-
-  setColor(pColor) {
-    this.color = pColor;
-  }
+  
 }
 
 //
@@ -39,7 +36,8 @@ function formatReqResult(pPesult) {
       response.name,
       response.description,
       response.price,
-      response.imageUrl
+      response.imageUrl,
+      response.colors
     );
 
     cardSection = document.querySelector("#cards");
@@ -82,6 +80,7 @@ function formatReqResult(pPesult) {
       sessionStorage.setItem("price", teddy.price);
       sessionStorage.setItem("description", teddy.description);
       sessionStorage.setItem("imageUrl", teddy.imageUrl);
+      sessionStorage.setItem("colors", teddy.tColors);
 
       window.location = "item-details.html";
     });
