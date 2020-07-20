@@ -73,3 +73,8 @@ increaseBtn.addEventListener("click", function (e) {
   qtyElt.textContent = qty;
 });
 
+//Command Btn:
+let commandBtn = document.querySelector('#commandBtn');
+commandBtn.addEventListener('click', function(e){
+    e.preventDefault();
+})
