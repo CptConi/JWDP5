@@ -75,12 +75,12 @@ function formatReqResult(pPesult) {
     );
 
     commandBtn.addEventListener("click", function () {
-      sessionStorage.setItem("id", teddy.id);
-      sessionStorage.setItem("name", teddy.name);
-      sessionStorage.setItem("price", teddy.price);
-      sessionStorage.setItem("description", teddy.description);
-      sessionStorage.setItem("imageUrl", teddy.imageUrl);
-      sessionStorage.setItem("colors", teddy.tColors);
+      localStorage.setItem("id", teddy.id);
+      localStorage.setItem("name", teddy.name);
+      localStorage.setItem("price", teddy.price);
+      localStorage.setItem("description", teddy.description);
+      localStorage.setItem("imageUrl", teddy.imageUrl);
+      localStorage.setItem("colors", teddy.tColors);
 
       window.location = "item-details.html";
     });
