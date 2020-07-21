@@ -13,10 +13,8 @@ class Teddy {
     this.imageUrl = pImageUrl;
     this.tColors = pColor;
   }
-  
 }
 
-//
 request.addEventListener("load", function () {
   if (request.status <= 200 && request.status < 300) {
     //Inscrire ici les path pour accéder aux infos de la réponse server, avec un JSON.parce(request.responseText.[...])
@@ -25,10 +23,10 @@ request.addEventListener("load", function () {
     formatReqResult(result);
   }
 });
-
 request.open("GET", teddiesURL, true);
 request.send();
 
+//Formating each API request response
 function formatReqResult(pPesult) {
   for (var response of pPesult) {
     const teddy = new Teddy(
@@ -73,15 +71,15 @@ function formatReqResult(pPesult) {
       "class",
       "btn btn-primary " + /*stretched-link*/ " w-50 mx-auto my-3"
     );
+    //Add tooltip if more than 1 colour available:
+    if (teddy.tColors.length > 1) {
+      commandBtn.setAttribute("data-toggle", "tooltip");
+      commandBtn.setAttribute("data-placement", "right");
+      commandBtn.setAttribute("title", "Plusieurs couleurs disponibles !");
+    }
 
     commandBtn.addEventListener("click", function () {
-      localStorage.setItem("id", teddy.id);
-      localStorage.setItem("name", teddy.name);
-      localStorage.setItem("price", teddy.price);
-      localStorage.setItem("description", teddy.description);
-      localStorage.setItem("imageUrl", teddy.imageUrl);
-      localStorage.setItem("colors", teddy.tColors);
-
+      localStorage.setItem("item", JSON.stringify(teddy));
       window.location = "item-details.html";
     });
 
@@ -90,6 +88,9 @@ function formatReqResult(pPesult) {
     price.textContent = teddy.price + " €";
     commandBtn.textContent = "Je le veux !";
   }
+  $(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+  });
 }
 
 //Set cart Qty in header on page load:
@@ -99,6 +100,5 @@ if (localStorage.getItem("cartQty")) {
 } else {
   cartQtyElt.style.display = "none";
 }
-
 
 // Pour stocker infos sur sesion storage > JSON.stringify puis JSON.parse

@@ -17,12 +17,12 @@ class Cart {
 
 //TODO: stringify / parsing plutôt que de passer chaque paramètre en item localStorage.
 let teddy = new Teddy(
-  localStorage.getItem("id"),
-  localStorage.getItem("name"),
-  localStorage.getItem("description"),
-  localStorage.getItem("price"),
-  localStorage.getItem("imageUrl"),
-  localStorage.getItem("colors")
+  JSON.parse(localStorage.getItem("item")).id,
+  JSON.parse(localStorage.getItem("item")).name,
+  JSON.parse(localStorage.getItem("item")).description,
+  JSON.parse(localStorage.getItem("item")).price,
+  JSON.parse(localStorage.getItem("item")).imageUrl,
+  JSON.parse(localStorage.getItem("item")).tColors
 );
 function formatTextAttribute(pElt, pObjParam) {
   pElt.innerHTML = pObjParam;
@@ -46,8 +46,7 @@ formatTextAttribute(descriptionElt, teddy.description);
 formatTextAttribute(priceElt, teddy.price);
 
 //Formating color 'select'
-let colorsArray = teddy.tColors.split(",");
-for (color of colorsArray) {
+for (color of teddy.tColors) {
   optionElt = document.createElement("option");
   optionElt.textContent = color;
   optionElt.setAttribute("value", color);
