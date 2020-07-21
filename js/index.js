@@ -100,5 +100,3 @@ if (localStorage.getItem("cartQty")) {
 } else {
   cartQtyElt.style.display = "none";
 }
-
-// Pour stocker infos sur sesion storage > JSON.stringify puis JSON.parse

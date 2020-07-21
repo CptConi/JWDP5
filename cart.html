@@ -16,77 +16,66 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="./css/style.css" />
-    <title>Orinoco: Nos plus beaux Teddy Bears</title>
+    <title>Orinoco: Votre Panier</title>
   </head>
   <body>
-    <!-- ------------NAV BAR--------------- -->
+    <!-- ----------------NAV BAR------------------- -->
     <header>
-
       <div class="container-fluid">
         <div class="row">
           <div class="col">
             <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
               <a class="navbar-brand" href="index.html">
                 <img
-                src="./images/brandlogo.png"
-                alt="site logo"
-                height="40"
-                width="40"
+                  src="./images/brandlogo.png"
+                  alt="site logo"
+                  height="40"
+                  width="40"
                 />
                 Orinoco</a
-                >
-                <button
+              >
+              <button
                 class="navbar-toggler"
                 type="button"
                 data-toggle="collapse"
                 data-target=".navbarContent"
-                >
+              >
                 <span class="navbar-toggler-icon"></span>
               </button>
               <div class="collapse navbar-collapse navbarContent">
                 <ul class="navbar-nav">
-                  <li class="nav-item active">
+                  <li class="nav-item">
                     <a class="nav-link" href="index.html">Accueil</a>
                   </li>
                 </ul>
               </div>
               <div class="collapse navbar-collapse navbarContent">
                 <ul
-                class="navbarContent nav navbar-nav w-100 justify-content-end"
+                  class="navbarContent nav navbar-nav w-100 justify-content-end"
                 >
-                <li class="nav-item">
-                  <a class="nav-link" href="cart.html"
-                  >Panier <span id="cartQty">0</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-    </div>
-  </div>
-</header>
-  <!-- -------------------BODY----------------- -->
-  <div class="container">
-    <div class="row">
-      <div class="col">
-        <h1>Bienvenue chez Orinoco !</h1>
-      </div>
-    </div>
-    <div class="row">
-        <div class="col">
-          <div class="requestContent">
-            <p>
-              Que pensez-vous de notre "tout doux list" ?
-            </p>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="cart.html"
+                      >Panier <span id="cartQty">0</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </nav>
           </div>
         </div>
       </div>
-      <!-- --------------AUTO GENERATED CARDS ------------ -->
-      <div class="row" id="cards"></div>
+    </header>
+    <!-- --------------------TITLE-------------------- -->
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1 class="mt-3">Votre panier</h1>
+                <p id="cartInfos" class="h6 mt-3">Votre panier est vide.</p>
+            </div>
+        </div>
     </div>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <!-- --------------------CART CONTENT------------- -->
+  <!-- -------------------SCRIPT--------------- -->
     <script
       src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
       integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
@@ -102,6 +91,6 @@
       integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
       crossorigin="anonymous"
     ></script>
-    <script src="./js/index.js"></script>
+    <script src="./js/cart.js"></script>
   </body>
 </html>

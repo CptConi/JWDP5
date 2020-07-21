@@ -3,6 +3,8 @@
 }
 .itemFrame {
   border: rgba(211, 211, 211, 0.158) 1px solid;
+  background-color: #fff;
+  padding-bottom: 1em;
   &__img {
     margin-bottom: 3rem;
     object-fit: cover;
@@ -24,3 +26,7 @@
   padding: 0.1rem 0.55rem 0.2rem 0.5rem;
 }
 // VARIABLES OVERRIDE:
+
+body{
+  background-color: #f3e9f1;
+}
