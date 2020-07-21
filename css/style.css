@@ -21,4 +21,11 @@
   border-radius: 8px;
 }
 
+#cartQty {
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 0.1rem 0.55rem 0.2rem 0.5rem;
+}
+
 /*# sourceMappingURL=style.css.map */

@@ -92,4 +92,13 @@ function formatReqResult(pPesult) {
   }
 }
 
+//Set cart Qty in header on page load:
+let cartQtyElt = document.querySelector("#cartQty");
+if (localStorage.getItem("cartQty")) {
+  cartQtyElt.textContent = localStorage.getItem("cartQty");
+} else {
+  cartQtyElt.style.display = "none";
+}
+
+
 // Pour stocker infos sur sesion storage > JSON.stringify puis JSON.parse

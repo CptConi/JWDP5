@@ -18,6 +18,7 @@
       integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="./css/style.css" />
 
     <title>Orinoco</title>
   </head>
@@ -53,13 +54,17 @@
               </ul>
             </div>
             <div class="collapse navbar-collapse navbarContent">
-              <ul class="navbarContent nav navbar-nav w-100 justify-content-end">
+              <ul
+                class="navbarContent nav navbar-nav w-100 justify-content-end"
+              >
                 <li class="nav-item">
-                  <a class="nav-link" href="#">Panier</a>
+                  <a class="nav-link" href="#"
+                    >Panier <span id="cartQty">0</span>
+                  </a>
                 </li>
               </ul>
             </div>
-            </nav>
+          </nav>
         </div>
       </div>
     </div>
@@ -73,13 +78,15 @@
       <div class="row">
         <div class="col">
           <div class="requestContent">
-            <p>Un large de choix de Teddy bears pour le plaisirs et petits et grands:</p>
+            <p>
+              Un large de choix de Teddy bears pour le plaisirs et petits et
+              grands:
+            </p>
           </div>
         </div>
       </div>
       <!-- --------------AUTO GENERATED CARDS ------------ -->
-      <div class="row" id="cards">
-      </div>
+      <div class="row" id="cards"></div>
     </div>
     <!-- --------------HERO SECTION ------------------ -->
     <!-- Optional JavaScript -->
