@@ -11,8 +11,13 @@ class Teddy {
 }
 
 class Cart {
-  constructor(pItemId, pQty) {
-    this.itemId = pItemId;
+  constructor(pItemId, pName, pDescription, pPrice, pImageUrl, pMod, pQty) {
+    this.id = pItemId;
+    this.name = pName;
+    this.description = pDescription;
+    this.price = pPrice;
+    this.imageUrl = pImageUrl;
+    this.tModifiers = pMod;
     this.qty = pQty;
   }
 }
@@ -114,7 +119,7 @@ if (bExist) {
   //Command Btn click:
   commandBtn.addEventListener("click", function (e) {
     e.preventDefault();
-    addCart(qty, teddy.id);
+    addCart(qty, teddy);
   });
 
   //Get the actual qty of pItemId in cart.
@@ -135,13 +140,21 @@ if (bExist) {
 
 //Adds qty of pItemId in cart
 let cartQtyElt = document.querySelector("#cartQty");
-function addCart(pQty, pItemId) {
-  let cart = new Cart(pItemId, pQty);
+function addCart(pQty, pItem) {
+  let cart = new Cart(
+    pItem.id,
+    pItem.name,
+    pItem.description,
+    pItem.price,
+    pItem.imageUrl,
+    pItem.tColors,
+    pQty
+  );
   if (localStorage.getItem("cart--" + cart.itemId)) {
-    cart.qty += getCartQty(pItemId);
-    localStorage.setItem("cart--" + pItemId, JSON.stringify(cart));
+    cart.qty += getCartQty(pItem.id);
+    localStorage.setItem("cart--" + pItem.id, JSON.stringify(cart));
   } else {
-    localStorage.setItem("cart--" + pItemId, JSON.stringify(cart));
+    localStorage.setItem("cart--" + pItem.id, JSON.stringify(cart));
   }
   if (localStorage.getItem("cartQty")) {
     let locStorCartQty = localStorage.getItem("cartQty");
