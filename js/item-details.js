@@ -10,7 +10,7 @@ class Teddy {
   }
 }
 
-class Cart {
+class CartItem {
   constructor(pItemId, pName, pDescription, pPrice, pImageUrl, pMod, pQty) {
     this.id = pItemId;
     this.name = pName;
@@ -19,6 +19,7 @@ class Cart {
     this.imageUrl = pImageUrl;
     this.tModifiers = pMod;
     this.qty = pQty;
+    this.isCartItem = true;
   }
 }
 let bExist = true;
@@ -63,7 +64,7 @@ if (bExist) {
     if (teddy.id) {
       let randIndex = rndInt(stringTab.length - 1);
       document.querySelector("h1").textContent = stringTab[randIndex];
-    } 
+    }
   }
   displayTitle(tRandHeader);
 
@@ -76,7 +77,7 @@ if (bExist) {
 
   //formating page:
   imgElt.setAttribute("src", teddy.imageUrl);
-  document.title = 'Orinoco: '+ teddy.name;
+  document.title = "Orinoco: " + teddy.name;
   formatTextAttribute(nameElt, teddy.name);
   formatTextAttribute(descriptionElt, teddy.description);
   formatTextAttribute(priceElt, teddy.price);
@@ -134,14 +135,15 @@ if (bExist) {
   document.querySelector("h1").textContent =
     "C'est une bonne situation ça, page cassée ?";
   document.title = "Orinoco: C'est cassé";
-  subtitleElt = document.querySelector('#subtitle');
-  subtitleElt.innerHTML = '<a href="index.html">> Par ici, je m\'occupe du reste ! <</a>';
+  subtitleElt = document.querySelector("#subtitle");
+  subtitleElt.innerHTML =
+    '<a href="index.html">> Par ici, je m\'occupe du reste ! <</a>';
 }
 
 //Adds qty of pItemId in cart
 let cartQtyElt = document.querySelector("#cartQty");
 function addCart(pQty, pItem) {
-  let cart = new Cart(
+  let cart = new CartItem(
     pItem.id,
     pItem.name,
     pItem.description,

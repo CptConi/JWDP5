@@ -2,7 +2,7 @@
 
 let teddiesURL = "http://localhost:3000/api/teddies";
 let result;
-let request = new XMLHttpRequest();
+const request = new XMLHttpRequest();
 
 class Teddy {
   constructor(pId, pName, pDescription, pPrice, pImageUrl, pColor) {

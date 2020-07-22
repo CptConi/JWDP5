@@ -30,6 +30,21 @@
   padding: 0.1rem 0.55rem 0.2rem 0.5rem;
 }
 
+td, th {
+  text-align: center;
+  justify-content: center;
+  vertical-align: sub;
+}
+
+#commandTd {
+  text-align: end;
+}
+
+#qtyElt {
+  position: relative;
+  top: 6px;
+}
+
 body {
   background-color: #f3e9f1;
 }
