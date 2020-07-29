@@ -1,27 +1,10 @@
-//-------------------CLASSES------------------------
-class Teddy {
-  constructor(pId, pName, pDescription, pPrice, pImageUrl, pColors) {
-    this.id = pId;
-    this.name = pName;
-    this.description = pDescription;
-    this.price = pPrice;
-    this.imageUrl = pImageUrl;
-    this.tColors = pColors;
-  }
-}
+import { Cart, CartItem, Teddy, setCartQtyHeader, initCart } from "./cartManager.js";
 
-class CartItem {
-  constructor(pItemId, pName, pDescription, pPrice, pImageUrl, pMod, pQty) {
-    this.id = pItemId;
-    this.name = pName;
-    this.description = pDescription;
-    this.price = pPrice;
-    this.imageUrl = pImageUrl;
-    this.tModifiers = pMod;
-    this.qty = pQty;
-    this.isCartItem = true;
-  }
-}
+// Au chargement de la page, on doit créer l'objet Cart, ou le récupérer de localStorage s'il existe déjà
+let orinocoCart = new Cart();
+initCart(orinocoCart);
+
+//--------Checking item in localstorage to format display-------
 let bExist = true;
 if (localStorage.getItem("item") === null) {
   bExist = false;
@@ -70,10 +53,10 @@ if (bExist) {
 
   //--------------------------WEB PAGE----------------------------------
   //init pages elements:
-  imgElt = document.querySelector("#imageUrl");
-  nameElt = document.querySelector("#name");
-  descriptionElt = document.querySelector("#description");
-  priceElt = document.querySelector("#price");
+  let imgElt = document.querySelector("#imageUrl");
+  let nameElt = document.querySelector("#name");
+  let descriptionElt = document.querySelector("#description");
+  let priceElt = document.querySelector("#price");
 
   //formating page:
   imgElt.setAttribute("src", teddy.imageUrl);
@@ -83,8 +66,11 @@ if (bExist) {
   formatTextAttribute(priceElt, teddy.price);
 
   //Formating color 'select'
-  for (color of teddy.tColors) {
-    optionElt = document.createElement("option");
+  if (teddy.tColors.length === 1) {
+    document.getElementById("helpText").textContent = "";
+  }
+  for (let color of teddy.tColors) {
+    let optionElt = document.createElement("option");
     optionElt.textContent = color;
     optionElt.setAttribute("value", color);
     document.querySelector("#couleur").appendChild(optionElt);
@@ -122,8 +108,6 @@ if (bExist) {
     e.preventDefault();
     addCart(qty, teddy);
   });
-
-  
 } else {
   //Display if no item/infos in localStorage:
   document.querySelector("h1").textContent =
@@ -134,19 +118,11 @@ if (bExist) {
     '<a href="index.html">> Par ici, je m\'occupe du reste ! <</a>';
 }
 
-//Get the actual qty of pItemId in cart.
-  function getCartQty(pItem) {
-    let tempCart = localStorage.getItem("cart--" + pItem.id);
-    tempCart = JSON.parse(tempCart);
-    let qty = tempCart.qty;
-    console.log("quantité déjà en panier: "+qty);
-    return qty;
-  }
-
 //Adds qty of pItemId in cart
-let cartQtyElt = document.querySelector("#cartQty");
+setCartQtyHeader(orinocoCart);
+
 function addCart(pQty, pItem) {
-  let cart = new CartItem(
+  const cartItem = new CartItem(
     pItem.id,
     pItem.name,
     pItem.description,
@@ -155,25 +131,24 @@ function addCart(pQty, pItem) {
     pItem.tColors,
     pQty
   );
-  if (localStorage.getItem("cart--" + cart.id)) {
-    cart.qty += getCartQty(cart);
-    localStorage.setItem("cart--" + pItem.id, JSON.stringify(cart));
-  } else {
-    localStorage.setItem("cart--" + pItem.id, JSON.stringify(cart));
+  //Check if item already exist in Object Cart
+  let bAlreadyInCart = false;
+  for (let item of orinocoCart.itemsList) {
+    if (cartItem.id === item.id) {
+      bAlreadyInCart = true;
+      let actualQty = parseInt(item.qty);
+      item.qty = actualQty + pQty;
+    }
   }
-  if (localStorage.getItem("cartQty")) {
-    let locStorCartQty = localStorage.getItem("cartQty");
-    locStorCartQty = parseInt(locStorCartQty);
-    localStorage.setItem("cartQty", locStorCartQty + pQty);
+  if (bAlreadyInCart) {
   } else {
-    localStorage.setItem("cartQty", pQty);
+    //Création de l'entrée Orinoco-cart dans localStorage
+    orinocoCart.addItem(cartItem);
   }
-  cartQtyElt.textContent = localStorage.getItem("cartQty");
+  localStorage.setItem("Orinoco-cart", JSON.stringify(orinocoCart));
+
+  //Set cart Qty in header
+  let cartQtyElt = document.querySelector("#cartQty");
+  cartQtyElt.textContent = orinocoCart.getTotalQty();
   cartQtyElt.style.display = "inline";
-}
-//Set cart Qty in header on page load:
-if (localStorage.getItem("cartQty")) {
-  cartQtyElt.textContent = localStorage.getItem("cartQty");
-} else {
-  cartQtyElt.style.display = "none";
 }

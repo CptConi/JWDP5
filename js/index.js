@@ -1,19 +1,11 @@
-// const e = require("express");
+import { Teddy, setCartQtyHeader, Cart, initCart } from "./cartManager.js";
+
 
 let teddiesURL = "http://localhost:3000/api/teddies";
 let result;
 const request = new XMLHttpRequest();
 
-class Teddy {
-  constructor(pId, pName, pDescription, pPrice, pImageUrl, pColor) {
-    this.id = pId;
-    this.name = pName;
-    this.description = pDescription;
-    this.price = pPrice;
-    this.imageUrl = pImageUrl;
-    this.tColors = pColor;
-  }
-}
+
 
 request.addEventListener("load", function () {
   if (request.status <= 200 && request.status < 300) {
@@ -38,15 +30,15 @@ function formatReqResult(pPesult) {
       response.colors
     );
 
-    cardSection = document.querySelector("#cards");
-    col = document.createElement("div");
-    div1 = document.createElement("div");
-    div2 = document.createElement("div");
-    img = document.createElement("img");
-    title = document.createElement("h2");
-    description = document.createElement("p");
-    price = document.createElement("p");
-    commandBtn = document.createElement("button");
+    let cardSection = document.querySelector("#cards");
+    let col = document.createElement("div");
+    let div1 = document.createElement("div");
+    let div2 = document.createElement("div");
+    let img = document.createElement("img");
+    let title = document.createElement("h2");
+    let description = document.createElement("p");
+    let price = document.createElement("p");
+    let commandBtn = document.createElement("button");
 
     cardSection.appendChild(col);
     col.appendChild(div1);
@@ -94,9 +86,6 @@ function formatReqResult(pPesult) {
 }
 
 //Set cart Qty in header on page load:
-let cartQtyElt = document.querySelector("#cartQty");
-if (localStorage.getItem("cartQty")) {
-  cartQtyElt.textContent = localStorage.getItem("cartQty");
-} else {
-  cartQtyElt.style.display = "none";
-}
+let orinocoCart = new Cart();
+initCart(orinocoCart);
+setCartQtyHeader(orinocoCart);
