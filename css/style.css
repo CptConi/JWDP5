@@ -49,4 +49,9 @@ body {
   background-color: #f3e9f1;
 }
 
+#totalCartSubmit {
+  margin-top: 1em;
+  text-align: end;
+}
+
 /*# sourceMappingURL=style.css.map */
