@@ -45,7 +45,7 @@ if (bExist) {
       pElt.innerHTML += " €";
     }
   }
-  //--------------------------OPTIONNAL: RANDOM H1 ------------------------------
+  //-------------------------- OPTIONNAL: RANDOM H1 ------------------------------
   let tRandHeader = [
     "Excellent choix",
     "Wow, vous avez du goût !",
@@ -68,7 +68,7 @@ if (bExist) {
   }
   displayTitle(tRandHeader);
 
-  //-----------------------WEB PAGE------------------------
+  //--------------------------WEB PAGE----------------------------------
   //init pages elements:
   imgElt = document.querySelector("#imageUrl");
   nameElt = document.querySelector("#name");
@@ -123,13 +123,7 @@ if (bExist) {
     addCart(qty, teddy);
   });
 
-  //Get the actual qty of pItemId in cart.
-  function getCartQty(pItemId) {
-    let tempCart = localStorage.getItem("cart--" + pItemId);
-    tempCart = JSON.parse(tempCart);
-    let qty = tempCart.qty;
-    return qty;
-  }
+  
 } else {
   //Display if no item/infos in localStorage:
   document.querySelector("h1").textContent =
@@ -139,6 +133,15 @@ if (bExist) {
   subtitleElt.innerHTML =
     '<a href="index.html">> Par ici, je m\'occupe du reste ! <</a>';
 }
+
+//Get the actual qty of pItemId in cart.
+  function getCartQty(pItem) {
+    let tempCart = localStorage.getItem("cart--" + pItem.id);
+    tempCart = JSON.parse(tempCart);
+    let qty = tempCart.qty;
+    console.log("quantité déjà en panier: "+qty);
+    return qty;
+  }
 
 //Adds qty of pItemId in cart
 let cartQtyElt = document.querySelector("#cartQty");
@@ -152,8 +155,8 @@ function addCart(pQty, pItem) {
     pItem.tColors,
     pQty
   );
-  if (localStorage.getItem("cart--" + cart.itemId)) {
-    cart.qty += getCartQty(pItem.id);
+  if (localStorage.getItem("cart--" + cart.id)) {
+    cart.qty += getCartQty(cart);
     localStorage.setItem("cart--" + pItem.id, JSON.stringify(cart));
   } else {
     localStorage.setItem("cart--" + pItem.id, JSON.stringify(cart));
