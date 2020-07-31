@@ -1,4 +1,29 @@
 import { CartItem, setCartQtyHeader, Cart, initCart } from "./cartManager.js";
+import { ajaxPost } from "./ajax.js"
+class Contact{
+  constructor(pPrenom, pNom, pAdress, pCity, pEmail){
+    this.firstName = pPrenom;
+    this.lastName = pNom;
+    this.adress = pAdress;
+    this.city = pCity;
+    this.email = pEmail;
+  }
+}
+
+class PayoutRequest{
+  constructor (pPrenom, pNom, pAdress, pCity, pEmail, pCart){
+    //Init contact part
+    this.contact = new Contact(pPrenom, pNom, pAdress, pCity, pEmail);
+    //Init Products array
+    this.products = [];
+    for (let i = 0; i < pCart.itemsList.length; i++){
+      for(let j = 0; j < pCart.itemsList[i].qty; j++){
+        let productId = pCart.itemsList[i].id;
+        this.products.push(productId);
+      }
+    }
+  }
+}
 
 //Set cart Qty in header on page load:
 let orinocoCart = new Cart();
@@ -66,24 +91,16 @@ function refreshPage() {
     totalCartValue.style.fontWeight = "bold";
     totalCartTrElt1.appendChild(totalCartValue);
 
-
     formatTableContent();
 
     //------------------Form--------------------
-    /**
-     * Expects request to contain:
-     * contact: {
-     *   firstName: string,
-     *   lastName: string,
-     *   address: string,
-     *   city: string,
-     *   email: string
-     * }
-     * products: [string] <-- array of product _id
-     */
+
     document
       .querySelector("#totalTable")
-      .insertAdjacentHTML("afterend", '<form id="payoutForm"></form>');
+      .insertAdjacentHTML(
+        "afterend",
+        '<form id="payoutForm" class="border rounded"></form>'
+      );
     let formElt = document.getElementById("payoutForm");
     //TODO:
     // Ajouter les classes de mise en forme Bootsrap pour le formulaire ici.
@@ -171,6 +188,22 @@ function refreshPage() {
     commandBtn.id = "totalCartSubmit";
     commandBtn.value = "Procéder au paiement";
     divEmail.appendChild(commandBtn);
+    /**
+     * Expects request to contain:
+     * contact: {
+     *   firstName: string,
+     *   lastName: string,
+     *   address: string,
+     *   city: string,
+     *   email: string
+     * }
+     * products: [string] <-- array of product _id
+     */
+    formElt.addEventListener("submit", function (e) {
+      e.preventDefault();
+      let stringReq = new PayoutRequest(formPrenomInput.value, formNomInput.value, formAdressInput.value, formCityInput.value, formEmailInput.value, orinocoCart);
+      JSON.stringify(stringReq);
+    });
   }
 }
 
