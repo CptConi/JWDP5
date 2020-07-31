@@ -1,26 +1,14 @@
 import { Teddy, setCartQtyHeader, Cart, initCart } from "./cartManager.js";
-
+import { ajaxGet } from "./ajax.js";
 
 let teddiesURL = "http://localhost:3000/api/teddies";
-let result;
-const request = new XMLHttpRequest();
 
-
-
-request.addEventListener("load", function () {
-  if (request.status <= 200 && request.status < 300) {
-    //Inscrire ici les path pour accéder aux infos de la réponse server, avec un JSON.parce(request.responseText.[...])
-    result = JSON.parse(request.responseText);
-    // Affichage et formatage des différents éléments récupérés dans result
-    formatReqResult(result);
-  }
-});
-request.open("GET", teddiesURL, true);
-request.send();
-
+ajaxGet(teddiesURL, formatReqResult);
 //Formating each API request response
-function formatReqResult(pPesult) {
-  for (var response of pPesult) {
+
+function formatReqResult(pResult) {
+  pResult = JSON.parse(pResult);
+  for (let response of pResult) {
     const teddy = new Teddy(
       response._id,
       response.name,

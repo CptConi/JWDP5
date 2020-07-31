@@ -1,29 +1,32 @@
 import { CartItem, setCartQtyHeader, Cart, initCart } from "./cartManager.js";
-import { ajaxPost } from "./ajax.js"
-class Contact{
-  constructor(pPrenom, pNom, pAdress, pCity, pEmail){
+import { ajaxPost } from "./ajax.js";
+
+class Contact {
+  constructor(pPrenom, pNom, pAddress, pCity, pEmail) {
     this.firstName = pPrenom;
     this.lastName = pNom;
-    this.adress = pAdress;
+    this.address = pAddress;
     this.city = pCity;
     this.email = pEmail;
   }
 }
 
-class PayoutRequest{
-  constructor (pPrenom, pNom, pAdress, pCity, pEmail, pCart){
+class PayoutRequest {
+  constructor(pPrenom, pNom, pAdress, pCity, pEmail, pCart) {
     //Init contact part
     this.contact = new Contact(pPrenom, pNom, pAdress, pCity, pEmail);
     //Init Products array
     this.products = [];
-    for (let i = 0; i < pCart.itemsList.length; i++){
-      for(let j = 0; j < pCart.itemsList[i].qty; j++){
+    for (let i = 0; i < pCart.itemsList.length; i++) {
+      for (let j = 0; j < pCart.itemsList[i].qty; j++) {
         let productId = pCart.itemsList[i].id;
         this.products.push(productId);
       }
     }
   }
 }
+
+let teddiesPostURL = "http://localhost:3000/api/teddies/order";
 
 //Set cart Qty in header on page load:
 let orinocoCart = new Cart();
@@ -201,10 +204,64 @@ function refreshPage() {
      */
     formElt.addEventListener("submit", function (e) {
       e.preventDefault();
-      let stringReq = new PayoutRequest(formPrenomInput.value, formNomInput.value, formAdressInput.value, formCityInput.value, formEmailInput.value, orinocoCart);
-      JSON.stringify(stringReq);
+      let payoutReq = new PayoutRequest(
+        formPrenomInput.value,
+        formNomInput.value,
+        formAdressInput.value,
+        formCityInput.value,
+        formEmailInput.value,
+        orinocoCart
+      );
+
+      //>>>>>>>>>>>>>>>>Méthode avec FormDATA<<<<<<<<<<<<<<<<<<<<<
+      // let FD = new FormData(formElt);
+      // FD.append('contact', payoutReq.contact);
+      // FD.append('products', payoutReq.products);
+      // consoleLogThis(FD);
+      // Envoi de la requête au server pour confirmation de commande
+      // ajaxPost(
+      //   teddiesPostURL,
+      //   FD,
+      //   consoleLogThis,
+      //   true
+      // );
+
+      //>>>>>>>>>>>>>>>>> Méthode avec string et objets<<<<<<<<<<<<<<<<<<<<<<
+      // let stringReq = 'contact='+JSON.stringify(payoutReq.contact)+'&products='+JSON.stringify(payoutReq.products);
+      // consoleLogThis(stringReq);
+      // // Envoi de la requête au server pour confirmation de commande
+      // ajaxPost(
+      //   teddiesPostURL,
+      //   stringReq,
+      //   consoleLogThis,
+      //   true
+      // );
+
+      //>>>>>>>>>>>>>>>>> Autre méthode avec des Objets <<<<<<<<<<<<<<<<<<<<
+      let data = {
+        contact: {
+          firstName: payoutReq.contact.firstName,
+          lastName: payoutReq.contact.lastName,
+          address: payoutReq.contact.address,
+          city: payoutReq.contact.city,
+          email: payoutReq.contact.email,
+        },
+        products: payoutReq.products,
+      };
+      consoleLogThis(data);
+      // Envoi de la requête au server pour confirmation de commande
+      ajaxPost(
+        teddiesPostURL,
+        data,
+        consoleLogThis,
+        true
+      );
     });
   }
+}
+
+function consoleLogThis(pMessage) {
+  console.log(pMessage);
 }
 
 function clearPage() {
