@@ -96,7 +96,7 @@ function refreshPage() {
 
     formatTableContent();
 
-    //------------------Form--------------------
+    //----------------------------------------Form--------------------------------
 
     document
       .querySelector("#totalTable")
@@ -212,32 +212,7 @@ function refreshPage() {
         formEmailInput.value,
         orinocoCart
       );
-
-      //>>>>>>>>>>>>>>>>Méthode avec FormDATA<<<<<<<<<<<<<<<<<<<<<
-      // let FD = new FormData(formElt);
-      // FD.append('contact', payoutReq.contact);
-      // FD.append('products', payoutReq.products);
-      // consoleLogThis(FD);
-      // Envoi de la requête au server pour confirmation de commande
-      // ajaxPost(
-      //   teddiesPostURL,
-      //   FD,
-      //   consoleLogThis,
-      //   true
-      // );
-
-      //>>>>>>>>>>>>>>>>> Méthode avec string et objets<<<<<<<<<<<<<<<<<<<<<<
-      // let stringReq = 'contact='+JSON.stringify(payoutReq.contact)+'&products='+JSON.stringify(payoutReq.products);
-      // consoleLogThis(stringReq);
-      // // Envoi de la requête au server pour confirmation de commande
-      // ajaxPost(
-      //   teddiesPostURL,
-      //   stringReq,
-      //   consoleLogThis,
-      //   true
-      // );
-
-      //>>>>>>>>>>>>>>>>> Autre méthode avec des Objets <<<<<<<<<<<<<<<<<<<<
+      //  Formating request in 'data'
       let data = {
         contact: {
           firstName: payoutReq.contact.firstName,
@@ -248,20 +223,26 @@ function refreshPage() {
         },
         products: payoutReq.products,
       };
-      consoleLogThis(data);
-      // Envoi de la requête au server pour confirmation de commande
-      ajaxPost(
-        teddiesPostURL,
-        data,
-        consoleLogThis,
-        true
-      );
+      // Send POST req to server to get command confirm
+      ajaxPost(teddiesPostURL, data, true)
+        .then(createConfirmInfos)
+        .catch(() => {
+          console.error(err);
+        });
+        //Emptying cart:
+        localStorage.removeItem('Orinoco-cart');
+        //Redirection to confirm page:
+        window.location = "command-confirm.html";
     });
   }
 }
 
-function consoleLogThis(pMessage) {
-  console.log(pMessage);
+function createConfirmInfos(reqResponse){
+  let confirmInfos = {
+    id: JSON.parse(reqResponse).orderId,
+    totalPrice: orinocoCart.getTotalPrice(),
+  };
+  sessionStorage.setItem('Orinoco-ConfirmationInfos', JSON.stringify(confirmInfos));
 }
 
 function clearPage() {

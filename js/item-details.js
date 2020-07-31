@@ -6,18 +6,18 @@ initCart(orinocoCart);
 
 //--------Checking item in localstorage to format display-------
 let bExist = true;
-if (localStorage.getItem("item") === null) {
+if (localStorage.getItem("Orinoco-item") === null) {
   bExist = false;
 }
 
 if (bExist) {
   let teddy = new Teddy(
-    JSON.parse(localStorage.getItem("item")).id,
-    JSON.parse(localStorage.getItem("item")).name,
-    JSON.parse(localStorage.getItem("item")).description,
-    JSON.parse(localStorage.getItem("item")).price,
-    JSON.parse(localStorage.getItem("item")).imageUrl,
-    JSON.parse(localStorage.getItem("item")).tColors
+    JSON.parse(localStorage.getItem("Orinoco-item")).id,
+    JSON.parse(localStorage.getItem("Orinoco-item")).name,
+    JSON.parse(localStorage.getItem("Orinoco-item")).description,
+    JSON.parse(localStorage.getItem("Orinoco-item")).price,
+    JSON.parse(localStorage.getItem("Orinoco-item")).imageUrl,
+    JSON.parse(localStorage.getItem("Orinoco-item")).tColors
   );
 
   function formatTextAttribute(pElt, pObjParam) {

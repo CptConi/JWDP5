@@ -3,9 +3,11 @@ import { ajaxGet } from "./ajax.js";
 
 let teddiesURL = "http://localhost:3000/api/teddies";
 
-ajaxGet(teddiesURL, formatReqResult);
-//Formating each API request response
+ajaxGet(teddiesURL).then(formatReqResult).catch(()=>{
+  console.error(err);
+});
 
+//Formating each API request response
 function formatReqResult(pResult) {
   pResult = JSON.parse(pResult);
   for (let response of pResult) {
@@ -59,7 +61,7 @@ function formatReqResult(pResult) {
     }
 
     commandBtn.addEventListener("click", function () {
-      localStorage.setItem("item", JSON.stringify(teddy));
+      localStorage.setItem("Orinoco-item", JSON.stringify(teddy));
       window.location = "item-details.html";
     });
 

@@ -104,3 +104,4 @@ export function initCart(pCart) {
     //Création du Cart si LocalStorage vide à la clé 'Orinoco-Cart'
   }
 }
+
