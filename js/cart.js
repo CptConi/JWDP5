@@ -34,6 +34,7 @@ initCart(orinocoCart);
 setCartQtyHeader(orinocoCart);
 
 let isEmpty;
+refreshPage();
 
 function refreshPage() {
   if (orinocoCart.getTotalQty() > 0) {
@@ -62,187 +63,14 @@ function refreshPage() {
         "afterend",
         '<div class="container" id="cartTab"></div>'
       );
-    let containerElt = document.querySelector("#cartTab");
 
-    //----------------------Tables--------------------------
-    //Init tables Headers:
-    //Cart:
-    let tableElt = document.createElement("table");
-    tableElt.setAttribute("class", "table table-hover");
-    containerElt.appendChild(tableElt);
-    tableElt.innerHTML =
-      '<thead class="thead-dark"><tr><th scope="col"> </th> <th scope="col"> </th> <th scope="col">Article</th> <th scope="col">Prix</th> <th scope="col">Quantité</th> <th scope="col">Total</th> </tr></thead><tbody></tbody>';
-    //Total price
-    //tHeader
-    let totalTableElt = document.createElement("table");
-    totalTableElt.setAttribute("class", "col-6 table my-5 justify-content-end");
-    totalTableElt.id = "totalTable";
-    containerElt.appendChild(totalTableElt);
-    totalTableElt.innerHTML =
-      '<thead class="thead-dark"><tr><th scope="col" colspan="2">Total du panier</th></tr></thead><tbody id="tbodyTotal"></tbody>';
-    //tBody
-    let totalCartTrElt1 = document.createElement("tr");
-    document.querySelector("#tbodyTotal").appendChild(totalCartTrElt1);
-
-    let totalCartText = document.createElement("td");
-    totalCartText.setAttribute("scope", "row");
-    totalCartText.textContent = "Total";
-    totalCartTrElt1.appendChild(totalCartText);
-
-    let totalCartValue = document.createElement("td");
-    totalCartValue.textContent = orinocoCart.getTotalPrice() + " €";
-    totalCartValue.style.fontWeight = "bold";
-    totalCartTrElt1.appendChild(totalCartValue);
-
+    initTable();
     formatTableContent();
 
     //----------------------------------------Form--------------------------------
 
-    document
-      .querySelector("#totalTable")
-      .insertAdjacentHTML(
-        "afterend",
-        '<form id="payoutForm" class="border rounded"></form>'
-      );
-    let formElt = document.getElementById("payoutForm");
-    //TODO:
-    // Ajouter les classes de mise en forme Bootsrap pour le formulaire ici.
-
-    //First Name:
-    let divPrenomNom = document.createElement("div");
-    divPrenomNom.setAttribute("class", "form-group form-row");
-    formElt.appendChild(divPrenomNom);
-    let colPrenom = document.createElement("div");
-    colPrenom.setAttribute("class", "col");
-    divPrenomNom.appendChild(colPrenom);
-    let formPrenomLabel = document.createElement("label");
-    formPrenomLabel.setAttribute("for", "firstName");
-    formPrenomLabel.textContent = "Prénom :";
-    colPrenom.appendChild(formPrenomLabel);
-    let formPrenomInput = document.createElement("input");
-    formPrenomInput.setAttribute("type", "text");
-    formPrenomInput.setAttribute("id", "firstName");
-    formPrenomInput.setAttribute("class", "form-control");
-    formPrenomInput.setAttribute("placeholder", "Prénom");
-    colPrenom.appendChild(formPrenomInput);
-    //Last Name:
-    let colNom = document.createElement("div");
-    colNom.setAttribute("class", "col");
-    divPrenomNom.appendChild(colNom);
-    let formNomLabel = document.createElement("label");
-    formNomLabel.setAttribute("for", "lastName");
-    formNomLabel.textContent = "Nom :";
-    colNom.appendChild(formNomLabel);
-    let formNomInput = document.createElement("input");
-    formNomInput.setAttribute("type", "text");
-    formNomInput.setAttribute("id", "lastName");
-    formNomInput.setAttribute("class", "form-control");
-    formNomInput.setAttribute("placeholder", "Nom");
-    colNom.appendChild(formNomInput);
-    //Adress:
-    let divAdress = document.createElement("div");
-    divAdress.setAttribute("class", "form-group form-row");
-    formElt.appendChild(divAdress);
-    let colAdress = document.createElement("div");
-    colAdress.setAttribute("class", "col");
-    divAdress.appendChild(colAdress);
-    let formAdressLabel = document.createElement("label");
-    formAdressLabel.setAttribute("for", "Adress");
-    formAdressLabel.textContent = "Adresse postale :";
-    colAdress.appendChild(formAdressLabel);
-    let formAdressInput = document.createElement("input");
-    formAdressInput.setAttribute("type", "text");
-    formAdressInput.setAttribute("id", "Adress");
-    formAdressInput.setAttribute("class", "form-control");
-    formAdressInput.setAttribute("placeholder", "Adresse");
-    colAdress.appendChild(formAdressInput);
-    //Ville
-    let colCity = document.createElement("div");
-    colCity.setAttribute("class", "col");
-    divAdress.appendChild(colCity);
-    let formCityLabel = document.createElement("label");
-    formCityLabel.setAttribute("for", "city");
-    formCityLabel.textContent = "Ville :";
-    colCity.appendChild(formCityLabel);
-    let formCityInput = document.createElement("input");
-    formCityInput.setAttribute("type", "text");
-    formCityInput.setAttribute("id", "city");
-    formCityInput.setAttribute("class", "form-control");
-    formCityInput.setAttribute("placeholder", "Ville");
-    colCity.appendChild(formCityInput);
-    //Email
-    let divEmail = document.createElement("div");
-    divEmail.setAttribute("class", "form-group");
-    formElt.appendChild(divEmail);
-    let formEmailLabel = document.createElement("label");
-    formEmailLabel.setAttribute("for", "email");
-    formEmailLabel.textContent = "Adresse mail :";
-    divEmail.appendChild(formEmailLabel);
-    let formEmailInput = document.createElement("input");
-    formEmailInput.setAttribute("type", "email");
-    formEmailInput.setAttribute("id", "email");
-    formEmailInput.setAttribute("class", "form-control");
-    formEmailInput.setAttribute("placeholder", "Mail");
-    divEmail.appendChild(formEmailInput);
-    //Button
-    let commandBtn = document.createElement("input");
-    commandBtn.setAttribute("type", "submit");
-    commandBtn.setAttribute("class", "btn btn-lg btn-primary float-right");
-    commandBtn.id = "totalCartSubmit";
-    commandBtn.value = "Procéder au paiement";
-    divEmail.appendChild(commandBtn);
-    /**
-     * Expects request to contain:
-     * contact: {
-     *   firstName: string,
-     *   lastName: string,
-     *   address: string,
-     *   city: string,
-     *   email: string
-     * }
-     * products: [string] <-- array of product _id
-     */
-    formElt.addEventListener("submit", function (e) {
-      e.preventDefault();
-      let payoutReq = new PayoutRequest(
-        formPrenomInput.value,
-        formNomInput.value,
-        formAdressInput.value,
-        formCityInput.value,
-        formEmailInput.value,
-        orinocoCart
-      );
-      //  Formating request in 'data'
-      let data = {
-        contact: {
-          firstName: payoutReq.contact.firstName,
-          lastName: payoutReq.contact.lastName,
-          address: payoutReq.contact.address,
-          city: payoutReq.contact.city,
-          email: payoutReq.contact.email,
-        },
-        products: payoutReq.products,
-      };
-      // Send POST req to server to get command confirm
-      ajaxPost(teddiesPostURL, data, true)
-        .then(createConfirmInfos)
-        .catch(() => {
-          console.error(err);
-        });
-        //Emptying cart:
-        localStorage.removeItem('Orinoco-cart');
-        //Redirection to confirm page:
-        window.location = "command-confirm.html";
-    });
+    initForm();
   }
-}
-
-function createConfirmInfos(reqResponse){
-  let confirmInfos = {
-    id: JSON.parse(reqResponse).orderId,
-    totalPrice: orinocoCart.getTotalPrice(),
-  };
-  sessionStorage.setItem('Orinoco-ConfirmationInfos', JSON.stringify(confirmInfos));
 }
 
 function clearPage() {
@@ -367,4 +195,193 @@ function formatTableContent() {
   }
 }
 
-refreshPage();
+function initTable() {
+  let containerElt = document.querySelector("#cartTab");
+  //Init tables Headers:
+  //Cart:
+  let tableElt = document.createElement("table");
+  tableElt.setAttribute("class", "table table-hover");
+  containerElt.appendChild(tableElt);
+  tableElt.innerHTML =
+    '<thead class="thead-dark"><tr><th scope="col"> </th> <th scope="col"> </th> <th scope="col">Article</th> <th scope="col">Prix</th> <th scope="col">Quantité</th> <th scope="col">Total</th> </tr></thead><tbody></tbody>';
+  //Total price
+  //tHeader
+  let totalTableElt = document.createElement("table");
+  totalTableElt.setAttribute("class", "col-6 table my-5 justify-content-end");
+  totalTableElt.id = "totalTable";
+  containerElt.appendChild(totalTableElt);
+  totalTableElt.innerHTML =
+    '<thead class="thead-dark"><tr><th scope="col" colspan="2">Total du panier</th></tr></thead><tbody id="tbodyTotal"></tbody>';
+  //tBody
+  let totalCartTrElt1 = document.createElement("tr");
+  document.querySelector("#tbodyTotal").appendChild(totalCartTrElt1);
+
+  let totalCartText = document.createElement("td");
+  totalCartText.setAttribute("scope", "row");
+  totalCartText.textContent = "Total";
+  totalCartTrElt1.appendChild(totalCartText);
+
+  let totalCartValue = document.createElement("td");
+  totalCartValue.textContent = orinocoCart.getTotalPrice() + " €";
+  totalCartValue.style.fontWeight = "bold";
+  totalCartTrElt1.appendChild(totalCartValue);
+}
+
+function initForm() {
+  document
+    .querySelector("#totalTable")
+    .insertAdjacentHTML(
+      "afterend",
+      '<form id="payoutForm" class="border rounded"></form>'
+    );
+  let formElt = document.getElementById("payoutForm");
+  //TODO:
+  // Ajouter les classes de mise en forme Bootsrap pour le formulaire ici.
+
+  //First Name:
+  let divPrenomNom = document.createElement("div");
+  divPrenomNom.setAttribute("class", "form-group form-row");
+  formElt.appendChild(divPrenomNom);
+  let colPrenom = document.createElement("div");
+  colPrenom.setAttribute("class", "col");
+  divPrenomNom.appendChild(colPrenom);
+  let formPrenomLabel = document.createElement("label");
+  formPrenomLabel.setAttribute("for", "firstName");
+  formPrenomLabel.textContent = "Prénom :";
+  colPrenom.appendChild(formPrenomLabel);
+  let formPrenomInput = document.createElement("input");
+  formPrenomInput.setAttribute("type", "text");
+  formPrenomInput.setAttribute("id", "firstName");
+  formPrenomInput.setAttribute("class", "form-control");
+  formPrenomInput.setAttribute("placeholder", "Prénom");
+  colPrenom.appendChild(formPrenomInput);
+  //Last Name:
+  let colNom = document.createElement("div");
+  colNom.setAttribute("class", "col");
+  divPrenomNom.appendChild(colNom);
+  let formNomLabel = document.createElement("label");
+  formNomLabel.setAttribute("for", "lastName");
+  formNomLabel.textContent = "Nom :";
+  colNom.appendChild(formNomLabel);
+  let formNomInput = document.createElement("input");
+  formNomInput.setAttribute("type", "text");
+  formNomInput.setAttribute("id", "lastName");
+  formNomInput.setAttribute("class", "form-control");
+  formNomInput.setAttribute("placeholder", "Nom");
+  colNom.appendChild(formNomInput);
+  //Adress:
+  let divAdress = document.createElement("div");
+  divAdress.setAttribute("class", "form-group form-row");
+  formElt.appendChild(divAdress);
+  let colAdress = document.createElement("div");
+  colAdress.setAttribute("class", "col");
+  divAdress.appendChild(colAdress);
+  let formAdressLabel = document.createElement("label");
+  formAdressLabel.setAttribute("for", "Adress");
+  formAdressLabel.textContent = "Adresse postale :";
+  colAdress.appendChild(formAdressLabel);
+  let formAdressInput = document.createElement("input");
+  formAdressInput.setAttribute("type", "text");
+  formAdressInput.setAttribute("id", "Adress");
+  formAdressInput.setAttribute("class", "form-control");
+  formAdressInput.setAttribute("placeholder", "Adresse");
+  colAdress.appendChild(formAdressInput);
+  //Ville
+  let colCity = document.createElement("div");
+  colCity.setAttribute("class", "col");
+  divAdress.appendChild(colCity);
+  let formCityLabel = document.createElement("label");
+  formCityLabel.setAttribute("for", "city");
+  formCityLabel.textContent = "Ville :";
+  colCity.appendChild(formCityLabel);
+  let formCityInput = document.createElement("input");
+  formCityInput.setAttribute("type", "text");
+  formCityInput.setAttribute("id", "city");
+  formCityInput.setAttribute("class", "form-control");
+  formCityInput.setAttribute("placeholder", "Ville");
+  colCity.appendChild(formCityInput);
+  //Email
+  let divEmail = document.createElement("div");
+  divEmail.setAttribute("class", "form-group");
+  formElt.appendChild(divEmail);
+  let formEmailLabel = document.createElement("label");
+  formEmailLabel.setAttribute("for", "email");
+  formEmailLabel.textContent = "Adresse mail :";
+  divEmail.appendChild(formEmailLabel);
+  let formEmailInput = document.createElement("input");
+  formEmailInput.setAttribute("type", "email");
+  formEmailInput.setAttribute("id", "email");
+  formEmailInput.setAttribute("class", "form-control");
+  formEmailInput.setAttribute("placeholder", "Mail");
+  divEmail.appendChild(formEmailInput);
+  //Button
+  let commandBtn = document.createElement("input");
+  commandBtn.setAttribute("type", "submit");
+  commandBtn.setAttribute("class", "btn btn-lg btn-primary float-right");
+  commandBtn.id = "totalCartSubmit";
+  commandBtn.value = "Procéder au paiement";
+  divEmail.appendChild(commandBtn);
+ 
+  formElt.addEventListener("submit", function (e) {
+    e.preventDefault();
+    let payoutReq = new PayoutRequest(
+      formPrenomInput.value,
+      formNomInput.value,
+      formAdressInput.value,
+      formCityInput.value,
+      formEmailInput.value,
+      orinocoCart
+    );
+    //  Formating request in 'data'
+    let data = {
+      contact: {
+        firstName: payoutReq.contact.firstName,
+        lastName: payoutReq.contact.lastName,
+        address: payoutReq.contact.address,
+        city: payoutReq.contact.city,
+        email: payoutReq.contact.email,
+      },
+      products: payoutReq.products,
+    };
+    // Send POST req to server to get command confirm
+    ajaxPost(teddiesPostURL, data, true)
+      .then(createConfirmInfos)
+      .catch(() => {
+        console.error(err);
+      });
+    //Emptying cart:
+    localStorage.removeItem("Orinoco-cart");
+    
+  });
+}
+
+function isDataValid(pType, pData){
+  switch (pType){
+    case 'firstName':
+      break;
+    case 'lastName':
+      break;
+    case 'address':
+      break;
+    case 'city':
+      break;
+    case 'email':
+      break;
+      default:
+        console.error('isDataValid wrong argument');
+    
+  }
+}
+
+function createConfirmInfos(reqResponse) {
+  let confirmInfos = {
+    id: JSON.parse(reqResponse).orderId,
+    totalPrice: orinocoCart.getTotalPrice(),
+  };
+  sessionStorage.setItem(
+    "Orinoco-ConfirmationInfos",
+    JSON.stringify(confirmInfos)
+  );
+  window.location = "command-confirm.html";
+}
+

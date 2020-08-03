@@ -34,7 +34,8 @@ if (bInfosExist){
     contentElt.appendChild(p2Elt);
     let priceElt = document.querySelector("#totalPrice");
     priceElt.textContent = totalPrice +' €';
-}else{
+}
+else{
     cleanPage();
     let titleElt = document.querySelector('#title')
     titleElt.textContent = 'Je pense que vous vous êtes perdus...'
