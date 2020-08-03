@@ -321,7 +321,7 @@ function initForm() {
   commandBtn.id = "totalCartSubmit";
   commandBtn.value = "Procéder au paiement";
   divEmail.appendChild(commandBtn);
- 
+
   formElt.addEventListener("submit", function (e) {
     e.preventDefault();
     let payoutReq = new PayoutRequest(
@@ -343,34 +343,66 @@ function initForm() {
       },
       products: payoutReq.products,
     };
-    // Send POST req to server to get command confirm
-    ajaxPost(teddiesPostURL, data, true)
-      .then(createConfirmInfos)
-      .catch(() => {
-        console.error(err);
-      });
-    //Emptying cart:
-    localStorage.removeItem("Orinoco-cart");
-    
+    if (
+      isDataValid("firstName", data.contact.firstName) &&
+      isDataValid("lastName", data.contact.lastName) &&
+      isDataValid("city", data.contact.city) &&
+      isDataValid("email", data.contact.email)
+    ) {
+      // Send POST req to server to get command confirm
+      ajaxPost(teddiesPostURL, data, true)
+        .then(createConfirmInfos)
+        .catch(() => {
+          console.error(err);
+        });
+      //Emptying cart:
+      localStorage.removeItem("Orinoco-cart");
+    }
   });
 }
 
-function isDataValid(pType, pData){
-  switch (pType){
-    case 'firstName':
+function isDataValid(pType, pData) {
+  let regex;
+  let validLenght;
+  switch (pType) {
+    case "firstName":
+      regex = new RegExp(/^[a-z ,.'-]+$/i);
+      pData.trim().length > 0 ? (validLenght = true) : (validLenght = false);
+      if (!validLenght || !regex.test(pData)) {
+        alert("Format du prénom invalide");
+        return false;
+      }
       break;
-    case 'lastName':
+    case "lastName":
+      regex = new RegExp(/^[a-z ,.'-]+$/i);
+      pData.trim().length > 0 ? (validLenght = true) : (validLenght = false);
+      if (!validLenght || !regex.test(pData)) {
+        alert("Format du nom invalide");
+        return false;
+      }
       break;
-    case 'address':
+    case "city":
+      regex = new RegExp(/^[a-z ,.'-]+$/i);
+      pData.trim().length > 0 ? (validLenght = true) : (validLenght = false);
+      if (!validLenght || !regex.test(pData)) {
+        alert("Format de la ville invalide");
+        return false;
+      }
       break;
-    case 'city':
+    case "email":
+      regex = new RegExp(
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      );
+      pData.trim().length > 0 ? (validLenght = true) : (validLenght = false);
+      if (!validLenght || !regex.test(pData)) {
+        alert("Format de l'adresse mail invalide");
+        return false;
+      }
       break;
-    case 'email':
-      break;
-      default:
-        console.error('isDataValid wrong argument');
-    
+    default:
+      console.error("isDataValid wrong argument");
   }
+  return true;
 }
 
 function createConfirmInfos(reqResponse) {
@@ -384,4 +416,3 @@ function createConfirmInfos(reqResponse) {
   );
   window.location = "command-confirm.html";
 }
-
