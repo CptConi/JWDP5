@@ -39,7 +39,7 @@ function formatReqResult(pResult) {
     div1.appendChild(price);
     div1.appendChild(commandBtn);
 
-    col.setAttribute("class", "col-4 my-3");
+    col.setAttribute("class", "col-md-6 col-lg-4 my-3");
     div1.setAttribute("class", "card shadow");
     div2.setAttribute("class", "card-body");
     img.setAttribute("class", "card-img-top h-75");

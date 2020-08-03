@@ -115,6 +115,7 @@ function formatTableContent() {
 
     let thElt = document.createElement("th");
     thElt.setAttribute("scope", "row");
+    thElt.setAttribute("class", "d-none d-sm-block");
     trElt.appendChild(thElt);
     //DEL Button
     let delBtn = document.createElement("button");
@@ -126,7 +127,8 @@ function formatTableContent() {
     trElt.appendChild(imgTdElt);
     let imgElt = document.createElement("img");
     imgElt.setAttribute("src", myCartItem.imageUrl);
-    imgElt.setAttribute("width", "60");
+    imgElt.setAttribute("id", "tabImg");
+    imgTdElt.setAttribute("class", "d-none d-sm-block");
     imgTdElt.appendChild(imgElt);
     //Item name
     let nameTdElt = document.createElement("td");
@@ -144,11 +146,11 @@ function formatTableContent() {
     qtyTdElt.setAttribute("class", "row align-middle");
     // [ - ] Button
     let minusBtn = document.createElement("button");
-    minusBtn.setAttribute("class", "btn btn-outline-secondary btn-sm mx-3");
+    minusBtn.setAttribute("class", "btn btn-outline-secondary btn-sm mx-1 mx-sm-3");
     minusBtn.textContent = "-";
     // [ + ] Button
     let addBtn = document.createElement("button");
-    addBtn.setAttribute("class", "btn btn-outline-secondary btn-sm mx-3");
+    addBtn.setAttribute("class", "btn btn-outline-secondary btn-sm mx-1 mx-sm-3");
     addBtn.textContent = "+";
     //Qty text
     let qtyElt = document.createElement("p");
@@ -200,14 +202,14 @@ function initTable() {
   //Init tables Headers:
   //Cart:
   let tableElt = document.createElement("table");
-  tableElt.setAttribute("class", "table table-hover");
+  tableElt.setAttribute("class", "col-12 table table-hover");
   containerElt.appendChild(tableElt);
   tableElt.innerHTML =
-    '<thead class="thead-dark"><tr><th scope="col"> </th> <th scope="col"> </th> <th scope="col">Article</th> <th scope="col">Prix</th> <th scope="col">Quantité</th> <th scope="col">Total</th> </tr></thead><tbody></tbody>';
+    '<thead class="thead-dark"><tr><th scope="col" class="tab-hide"> </th> <th scope="col" class="tab-hide"> </th> <th scope="col">Article</th> <th scope="col">Prix</th> <th scope="col">Quantité</th> <th scope="col">Total</th> </tr></thead><tbody></tbody>';
   //Total price
   //tHeader
   let totalTableElt = document.createElement("table");
-  totalTableElt.setAttribute("class", "col-6 table my-5 justify-content-end");
+  totalTableElt.setAttribute("class", "col-6 table my-5");
   totalTableElt.id = "totalTable";
   containerElt.appendChild(totalTableElt);
   totalTableElt.innerHTML =
@@ -278,7 +280,7 @@ function initForm() {
   divAdress.appendChild(colAdress);
   let formAdressLabel = document.createElement("label");
   formAdressLabel.setAttribute("for", "Adress");
-  formAdressLabel.textContent = "Adresse postale :";
+  formAdressLabel.textContent = "Adresse :";
   colAdress.appendChild(formAdressLabel);
   let formAdressInput = document.createElement("input");
   formAdressInput.setAttribute("type", "text");

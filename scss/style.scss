@@ -4,10 +4,13 @@
 .itemFrame {
   border: rgba(211, 211, 211, 0.158) 1px solid;
   background-color: #fff;
-  padding-bottom: 1em;
+  padding-bottom: 2em;
+  margin-bottom: 1em;
   &__img {
-    margin-bottom: 3rem;
+    margin-bottom: 4em;
     object-fit: cover;
+    width: 95%;
+    margin: auto;
     padding: 0px; // nullify Bootstrap standard padding
   }
 }
@@ -31,7 +34,21 @@ th {
   text-align: center;
   justify-content: center;
   vertical-align: sub;
+  & #tabImg {
+    width: 60px;
+  }
+  @media (max-width: 575px) {
+    font-size: small;
+    &.btn {
+      font-size: xx-large;
+    }
+  }
 }
+.tab-hide{
+    @media (max-width: 575px) {
+      display:none;
+    }
+  }
 
 #commandTd {
   text-align: end;
@@ -53,15 +70,14 @@ body {
   margin-bottom: 2em;
 }
 
-form{
-  &#payoutForm{
+form {
+  &#payoutForm {
     padding: 1em;
     padding-bottom: 4em;
     box-shadow: 0 0 20px rgba(211, 211, 211, 0.4);
   }
 }
 
-.confirmMessage{
+.confirmMessage {
   margin-top: 2em;
 }
-

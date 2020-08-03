@@ -5,11 +5,14 @@
 .itemFrame {
   border: rgba(211, 211, 211, 0.158) 1px solid;
   background-color: #fff;
-  padding-bottom: 1em;
+  padding-bottom: 2em;
+  margin-bottom: 1em;
 }
 .itemFrame__img {
-  margin-bottom: 3rem;
+  margin-bottom: 4em;
   object-fit: cover;
+  width: 95%;
+  margin: auto;
   padding: 0px;
 }
 
@@ -35,6 +38,26 @@ th {
   text-align: center;
   justify-content: center;
   vertical-align: sub;
+}
+td #tabImg,
+th #tabImg {
+  width: 60px;
+}
+@media (max-width: 575px) {
+  td,
+th {
+    font-size: small;
+  }
+  td.btn,
+th.btn {
+    font-size: xx-large;
+  }
+}
+
+@media (max-width: 575px) {
+  .tab-hide {
+    display: none;
+  }
 }
 
 #commandTd {
