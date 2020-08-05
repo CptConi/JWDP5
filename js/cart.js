@@ -66,9 +66,6 @@ function refreshPage() {
 
     initTable();
     formatTableContent();
-
-    //----------------------------------------Form--------------------------------
-
     initForm();
   }
 }
@@ -112,23 +109,23 @@ function formatTableContent() {
     let tbodyElt = document.querySelector("tbody");
     let trElt = document.createElement("tr");
     tbodyElt.appendChild(trElt);
-
-    let thElt = document.createElement("th");
-    thElt.setAttribute("scope", "row");
-    thElt.setAttribute("class", "d-none d-sm-block");
-    trElt.appendChild(thElt);
+    
     //DEL Button
+    let delTdElt = document.createElement("td");
+    delTdElt.setAttribute("scope", "row");
+    delTdElt.setAttribute("class", "d-none d-sm-table-cell");
+    trElt.appendChild(delTdElt);
     let delBtn = document.createElement("button");
     delBtn.setAttribute("class", "btn btn-outline-danger btn-sm");
     delBtn.textContent = "X";
-    thElt.appendChild(delBtn);
+    delTdElt.appendChild(delBtn);
     //Item picture
     let imgTdElt = document.createElement("td");
     trElt.appendChild(imgTdElt);
     let imgElt = document.createElement("img");
     imgElt.setAttribute("src", myCartItem.imageUrl);
     imgElt.setAttribute("id", "tabImg");
-    imgTdElt.setAttribute("class", "d-none d-sm-block");
+    imgTdElt.setAttribute("class", "d-none d-sm-table-cell");
     imgTdElt.appendChild(imgElt);
     //Item name
     let nameTdElt = document.createElement("td");

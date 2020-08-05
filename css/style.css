@@ -43,14 +43,14 @@ td #tabImg,
 th #tabImg {
   width: 60px;
 }
-@media (max-width: 575px) {
+@media (max-width: 768px) {
   td,
 th {
     font-size: small;
   }
   td.btn,
 th.btn {
-    font-size: xx-large;
+    font-size: small;
   }
 }
 
